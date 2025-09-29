@@ -1,0 +1,29 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Why blocks? They let child templates override just what's needed. -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Portfolio{% endblock title %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <header>
+    <nav>
+      <!-- Keeping early nav simple; we’ll flesh it out as features arrive -->
+      <a href="{% url 'home' %}">Home</a>
+      <!-- Future: Projects | Blog | Contact -->
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer>
+    <small>&copy; {{ now|date:"Y" }} Your Name</small>
+  </footer>
+</body>
+</html>

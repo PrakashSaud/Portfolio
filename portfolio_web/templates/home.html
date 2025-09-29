@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load tz %}
+
+{% block title %}{{ page_title }} · Portfolio{% endblock title %}
+
+{% block content %}
+  <section>
+    <h1>{{ page_title }}</h1>
+    <p>{{ tagline }}</p>
+    <p>Server time: {% now "DATETIME_FORMAT" %}</p>
+  </section>
+{% endblock content %}

@@ -11,21 +11,31 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import environ # added for environment variable management
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+## --- Environment variables ---
+# Using django-environ keeps secrets and deploy config out of source code.
+env = environ.Env(
+    DEBUG=(bool, True)
+)
+environ.Env.read_env(BASE_DIR / '.env')  # reads env file
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-30l9k48#w2&%-uv95d7hp+*-%9j09swspzgw640kt-t7mwx(_="
+# SECRET_KEY = "django-insecure-30l9k48#w2&%-uv95d7hp+*-%9j09swspzgw640kt-t7mwx(_="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+SECRET_KEY = env("SECRET_KEY", default="unsafe-dev-key")  # Default only for local fallback
+DEBUG = env("DEBUG")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
 
 # Application definition
@@ -57,8 +67,10 @@ INSTALLED_APPS = [
     "core",   # core = site-wide pages like Home, About; keeps non-domain-specific logic together
 ]
 
+# Whitenoise allows Django to serve static files in production simply.
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # new must be right after SecurityMiddleware
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -73,10 +85,11 @@ ROOT_URLCONF = "portfolio_web.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"], # global templates directory
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -121,21 +134,42 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
+
 LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
+TIME_ZONE = "America/New_York"  # helps date/time display and admin defaults
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "static/" 
+STATICFILES_DIRS = [BASE_DIR / "static"]  # global static directory
+STATIC_ROOT = BASE_DIR / "staticfiles"  # for `collectstatic`, used in
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+## --- Production settings ----
+# Better caching for static assets in production
+# config/settings.py
+
+# Storage backends (Django 5 requires explicit definitions)
+STORAGES = {
+    # Handles static files (CSS, JS, images you serve with collectstatic)
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+
+    # Handles media files (user-uploaded content: e.g., profile pics, resumes, etc.)
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+}
+
+# Media files (user uploads) setup
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
