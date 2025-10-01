@@ -1,29 +1,31 @@
-<!-- templates/base.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <!-- Why blocks? They let child templates override just what's needed. -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% block title %}Portfolio{% endblock title %}</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-  <header>
-    <nav>
-      <!-- Keeping early nav simple; we’ll flesh it out as features arrive -->
-      <a href="{% url 'home' %}">Home</a>
-      <!-- Future: Projects | Blog | Contact -->
-    </nav>
-  </header>
-
-  <main>
-    {% block content %}{% endblock content %}
-  </main>
-
-  <footer>
-    <small>&copy; {{ now|date:"Y" }} Your Name</small>
-  </footer>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Prakash Saud · Portfolio{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <!-- Tailwind CDN (dev only) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HTMX -->
+      <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+  </head>
+  <body class="min-h-screen bg-white text-gray-900 antialiased">
+    <header class="max-w-5xl mx-auto px-4 py-6">
+      <nav class="flex items-center justify-between">
+        <a href="{% url 'pages:home' %}" class="font-semibold">PS</a>
+        <ul class="flex gap-4">
+          <li><a href="{% url 'projects:project_index' %}">Projects</a></li>
+          <li><a href="{% url 'blog:blog_index' %}">Blog</a></li>
+          <li><a href="{% url 'contact:contact_index' %}">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="max-w-5xl mx-auto px-4 py-10">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="max-w-5xl mx-auto px-4 py-10 text-sm text-gray-500">
+      © {% now "Y" %} Prakash Saud
+    </footer>
+  </body>
 </html>

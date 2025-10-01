@@ -11,17 +11,16 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import environ # added for environment variable management
+
+import environ  # added for environment variable management
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ## --- Environment variables ---
 # Using django-environ keeps secrets and deploy config out of source code.
-env = environ.Env(
-    DEBUG=(bool, True)
-)
-environ.Env.read_env(BASE_DIR / '.env')  # reads env file
+env = environ.Env(DEBUG=(bool, True))
+environ.Env.read_env(BASE_DIR / ".env")  # reads env file
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -33,7 +32,9 @@ environ.Env.read_env(BASE_DIR / '.env')  # reads env file
 # DEBUG = True
 
 # ALLOWED_HOSTS = []
-SECRET_KEY = env("SECRET_KEY", default="unsafe-dev-key")  # Default only for local fallback
+SECRET_KEY = env(
+    "SECRET_KEY", default="unsafe-dev-key"
+)  # Default only for local fallback
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
@@ -47,7 +48,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Wagtail apps
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -62,9 +62,12 @@ INSTALLED_APPS = [
     "wagtail",
     "modelcluster",
     "taggit",
-
     # Your apps
-    "core",   # core = site-wide pages like Home, About; keeps non-domain-specific logic together
+    "core",  # core = site-wide pages like Home, About; keeps non-domain-specific logic together
+    "pages",  # pages = all the page types for the portfolio (project, blog, etc.)
+    "projects",
+    "blog",
+    "contact",
 ]
 
 # Whitenoise allows Django to serve static files in production simply.
@@ -85,7 +88,7 @@ ROOT_URLCONF = "portfolio_web.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"], # global templates directory
+        "DIRS": [BASE_DIR / "templates"],  # global templates directory
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -144,7 +147,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/" 
+STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]  # global static directory
 STATIC_ROOT = BASE_DIR / "staticfiles"  # for `collectstatic`, used in
 
@@ -152,6 +155,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # for `collectstatic`, used in
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+raise RuntimeError("Do not use portfolio/settings.py. Use core.settings.(dev|prod).")
 
 ## --- Production settings ----
 # Better caching for static assets in production
@@ -163,7 +167,6 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
-
     # Handles media files (user-uploaded content: e.g., profile pics, resumes, etc.)
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
