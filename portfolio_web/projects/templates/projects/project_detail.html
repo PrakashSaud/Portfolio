@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load markdown_extras %}
+{% block head_extra %}
+  {% if project %}
+    <meta property="og:title" content="{{ project.title }}">
+    <meta property="og:description" content="{{ project.description|truncatewords:30 }}">
+    {% if project.cover_image %}
+      <meta property="og:image" content="{{ request.build_absolute_uri(project.cover_image.url) }}">
+    {% endif %}
+    <meta name="description" content="{{ project.description|truncatewords:30 }}">
+  {% endif %}
+{% endblock %}
+{% block content %}
+<article class="py-10 max-w-3xl mx-auto">
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold">{{ project.title }}</h1>
+    <p class="text-gray-500">{{ project.created_at|date:"M d, Y" }}</p>
+  </header>
+  {% if project.cover_image %}
+  <div class="mb-6">
+    <img class="rounded-xl w-full" src="{{ project.cover_image.url }}" alt="{{ project.title }}">
+  </div>
+  {% endif %}
+  <div class="prose max-w-none">
+    {{ project.description|markdown_safe }}
+  </div>
+  <div class="mt-6 flex gap-4">
+    {% if project.live_url %}<a class="underline" href="{{ project.live_url }}" target="_blank" rel="noopener">Live</a>{% endif %}
+    {% if project.repo_url %}<a class="underline" href="{{ project.repo_url }}" target="_blank" rel="noopener">Repo</a>{% endif %}
+  </div>
+  {% if project.tags.all %}
+  <p class="mt-4 text-sm">Tags:
+    {% for t in project.tags.all %}
+      <a class="underline mr-2" href="{% url 'projects:list' %}?tag={{ t.slug }}">#{{ t.name }}</a>
+    {% endfor %}
+  </p>
+  {% endif %}
+
+  <nav class="mt-10 flex justify-between">
+    <div>
+      {% if prev_project %}
+        ← <a class="underline" href="{{ prev_project.get_absolute_url }}">{{ prev_project.title }}</a>
+      {% endif %}
+    </div>
+    <div>
+      {% if next_project %}
+        <a class="underline" href="{{ next_project.get_absolute_url }}">{{ next_project.title }}</a> →
+      {% endif %}
+    </div>
+  </nav>
+</article>
+{% endblock %}

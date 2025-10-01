@@ -1,0 +1,45 @@
+{% for obj in page_obj.object_list %}
+  <article class="border rounded p-4 mb-4">
+    <a href="{{ obj.get_absolute_url }}" class="block">
+      <div class="flex items-center gap-4">
+        {% if obj.cover_image %}
+          <img src="{{ obj.cover_image.url }}" alt="{{ obj.title }}" class="w-24 h-24 object-cover rounded">
+        {% endif %}
+        <div>
+          <h2 class="text-xl font-semibold">{{ obj.title }}</h2>
+          <p class="text-gray-600 line-clamp-2">{{ obj.description|truncatewords:30 }}</p>
+          <p class="text-sm text-gray-500 mt-1">{{ obj.tech_stack }}</p>
+          {% if obj.tags.all %}
+          <p class="mt-2 text-sm">
+            {% for t in obj.tags.all %}
+              <a class="underline mr-2" href="{% url 'projects:list' %}?tag={{ t.slug }}">{% firstof t.name t.slug %}</a>
+            {% endfor %}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+  </article>
+{% empty %}
+  <p>No projects found.</p>
+{% endfor %}
+
+{% if page_obj.paginator.num_pages > 1 %}
+  <nav class="mt-6 flex items-center gap-2">
+    {% if page_obj.has_previous %}
+      <a class="px-3 py-1 border rounded"
+         href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-get="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-target="#projects-grid"
+         hx-push-url="true">Prev</a>
+    {% endif %}
+    <span class="px-3 py-1">Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a class="px-3 py-1 border rounded"
+         href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-get="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-target="#projects-grid"
+         hx-push-url="true">Next</a>
+    {% endif %}
+  </nav>
+{% endif %}

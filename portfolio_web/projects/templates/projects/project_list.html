@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="py-10 max-w-6xl mx-auto">
+  <h1 class="text-3xl font-bold mb-6">Projects</h1>
+
+  <form class="mb-6 flex gap-3" method="get" action=".">
+    <input
+      type="text"
+      name="q"
+      value="{{ q }}"
+      placeholder="Search by title or tech…"
+      class="border rounded px-3 py-2 flex-1"
+      hx-get="."
+      hx-target="#projects-grid"
+      hx-push-url="true"
+      hx-trigger="keyup changed delay:300ms"
+    />
+    {% if active_tag %}
+      <input type="hidden" name="tag" value="{{ active_tag.slug }}">
+    {% endif %}
+    <button class="px-4 py-2 border rounded">Search</button>
+  </form>
+
+  <div class="mb-6 flex flex-wrap gap-2">
+    <a href="{% url 'projects:list' %}{% if q %}?q={{ q }}{% endif %}"
+       class="px-3 py-1 border rounded {% if not active_tag %}bg-gray-100{% endif %}"
+       hx-get="."
+       hx-target="#projects-grid"
+       hx-push-url="true">All</a>
+    {% for tag in all_tags %}
+      {% with url_q=''%}
+        {% if q %}{% with url_q='&q='|add:q %}{% endwith %}{% endif %}
+      {% endwith %}
+      <a href="?tag={{ tag.slug }}{% if q %}&q={{ q }}{% endif %}"
+         class="px-3 py-1 border rounded {% if active_tag and active_tag.slug == tag.slug %}bg-gray-100{% endif %}"
+         hx-get="?tag={{ tag.slug }}{% if q %}&q={{ q }}{% endif %}"
+         hx-target="#projects-grid"
+         hx-push-url="true">#{{ tag.name }}</a>
+    {% endfor %}
+  </div>
+
+  <div id="projects-grid" hx-indicator="#pjx-spinner">
+    {% include "projects/_projects_grid.html" %}
+  </div>
+
+  <div id="pjx-spinner" class="hidden">Loading…</div>
+</section>
+{% endblock %}
