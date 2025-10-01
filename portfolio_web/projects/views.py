@@ -7,6 +7,11 @@ from taggit.models import Tag
 from .models import Project
 
 
+def project_index(request):
+    # projects = Project.objects.all().order_by("-created_at")
+    return render(request, "projects/project_index.html")
+
+
 def projects_list(request):
     """
     Works without JS; HTMX enhances filtering/pagination.
@@ -44,7 +49,7 @@ def projects_list(request):
 
 
 def project_detail(request, slug):
-    project = get_object_or_404(Project, slug=slug)
+    project = get_object_or_404(Project)
     # prev/next by created_at (Meta.ordering is -created_at)
     prev_project = (
         Project.objects.filter(created_at__gt=project.created_at)

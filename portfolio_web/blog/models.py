@@ -1,9 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+from taggit.managers import TaggableManager
 
 
-# Create your models here.
 class BlogPost(models.Model):
     DRAFT = "draft"
     PUBLISHED = "published"
@@ -20,9 +20,7 @@ class BlogPost(models.Model):
     published_at = models.DateTimeField(null=True, blank=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tags = models.CharField(
-        max_length=300, blank=True, help_text="Comma-separated tags"
-    )
+    tags = TaggableManager(blank=True)  # <-- better than CharField
 
     class Meta:
         ordering = ["-published_at", "-created_at"]
@@ -31,11 +29,13 @@ class BlogPost(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("blog:detail", kwargs={"slug": self.slug})
+        return reverse(
+            "blog:post_detail", kwargs={"slug": self.slug}
+        )  # <-- match urls.py
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base = slugify(self.title)[:50]
+            base = slugify(self.title)[:200]  # match field max_length
             slug = base
             n = 2
             while BlogPost.objects.filter(slug=slug).exists():

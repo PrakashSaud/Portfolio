@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="about py-12 max-w-3xl mx-auto">
-  <h1 class="text-3xl font-bold mb-4">About Me</h1>
-  <p class="mb-6">Hi, I’m Prakash Saud. I’m a physicist turned data scientist & developer. I build data-driven applications and love teaching physics.</p>
+<section class="prose max-w-none">
+  <h1>About Me</h1>
+  <p>
+    I’m Prakash Saud, a physicist turned data scientist passionate about
+    computational methods, teaching, and building practical applications.
+  </p>
 
-  <h2 class="text-2xl font-semibold mt-6 mb-2">Skills</h2>
-  <ul class="list-disc pl-5">
-    <li>Python, Django, Pandas, SQL</li>
-    <li>Data Visualization & Machine Learning</li>
-    <li>HTML, CSS, Tailwind</li>
+  <h2>Skills</h2>
+  <ul>
+    <li>Python, Django, Pandas, Machine Learning</li>
+    <li>Data Visualization, SQL, Web Development</li>
+    <li>Physics, Computational Modeling, Teaching</li>
   </ul>
 
-  <a href="{% static 'resume.pdf' %}" class="inline-block mt-6 px-4 py-2 bg-blue-600 text-white rounded">Download Resume</a>
+  <a href="{% static 'resume.pdf' %}" class="btn mt-4">Download Resume</a>
 </section>
 {% endblock %}

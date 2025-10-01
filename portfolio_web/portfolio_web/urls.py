@@ -23,11 +23,15 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("pages.urls")),  # directs root URL to pages app
-    path("projects/", include("projects.urls")),  # directs /projects/ to projects app
-    path("blog/", include("blog.urls")),  # directs /blog/ to blog app
-    path("contact/", include("contact.urls")),  # directs /contact/ to contact app
+    path("", include(("pages.urls", "pages"), namespace="pages")),
+    path("projects/", include(("projects.urls", "projects"), namespace="projects")),
+    path("blog/", include(("blog.urls", "blog"), namespace="blog")),
+    path("contact/", include(("contact.urls", "contact"), namespace="contact")),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# error handlers
+handler404 = "pages.views.handler404"
+handler500 = "pages.views.handler500"
