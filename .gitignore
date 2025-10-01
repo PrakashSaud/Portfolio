@@ -1,6 +1,13 @@
 .venv/
+venv/
 __pycache__/
 *.pyc
-.env
+*.pyo
+*.pyd
+.DS_Store
 db.sqlite3
-roadmap.md
+staticfiles/
+.pytest_cache/
+.coverage
+coverage.xml
+.env
