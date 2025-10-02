@@ -3,6 +3,7 @@
     <a href="{% url 'pages:home' %}" class="font-bold text-lg">PS</a>
     <!-- Desktop nav -->
     <ul class="hidden md:flex gap-6 font-medium">
+      <li><a href="{% url 'pages:about' %}" class="hover:underline">About</a></li>
       <li><a href="{% url 'projects:list' %}" class="hover:underline">Projects</a></li>
       <li><a href="{% url 'blog:blog_index' %}" class="hover:underline">Blog</a></li>
       <li><a href="{% url 'contact:contact_index' %}" class="hover:underline">Contact</a></li>
@@ -15,6 +16,7 @@
     <button id="menu-toggle" class="md:hidden ml-4 px-3 py-2 border rounded">☰</button>
   </nav>
   <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
+    <a href="{% url 'pages:about' %}" class="block">About</a>
     <a href="{% url 'projects:list' %}" class="block">Projects</a>
     <a href="{% url 'blog:blog_index' %}" class="block">Blog</a>
     <a href="{% url 'contact:contact_index' %}" class="block">Contact</a>

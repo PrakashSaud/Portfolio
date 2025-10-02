@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}About · Prakash Saud{% endblock %}
 {% block meta_description %}Learn more about Prakash Saud — physicist turned data scientist passionate about computational methods, teaching, and building practical applications.{% endblock %}
 
@@ -19,7 +19,7 @@
   </ul>
 
   <a href="{% static 'resume.pdf' %}" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-    Download Resume
+    Download Resume 
   </a>
 </section>
 {% endblock %}
