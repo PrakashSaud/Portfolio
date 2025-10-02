@@ -1,0 +1,20 @@
+<article class="border rounded-lg p-4 shadow-sm hover:shadow-md transition bg-white dark:bg-gray-800">
+  <a href="{{ obj.get_absolute_url }}" class="block">
+    {% if obj.cover_image %}
+      <img src="{{ obj.cover_image.url }}" alt="{{ obj.title }}" class="w-full h-40 object-cover rounded mb-3">
+    {% endif %}
+    <h2 class="text-lg font-semibold mb-1">{{ obj.title }}</h2>
+    <p class="text-gray-600 dark:text-gray-300 line-clamp-2">{{ obj.description|truncatewords:20 }}</p>
+    <div class="mt-2 flex flex-wrap gap-2">
+      {% for t in obj.tags.all %}
+        <a href="{% url 'projects:list' %}?tag={{ t.slug }}"
+           hx-get="{% url 'projects:list' %}?tag={{ t.slug }}"
+           hx-target="#projects-grid"
+           hx-push-url="true"
+           class="inline-block bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 text-xs px-2 py-1 rounded">
+          {{ t.name }}
+        </a>
+      {% endfor %}
+    </div>
+  </a>
+</article>

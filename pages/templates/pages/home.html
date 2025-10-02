@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="text-center py-20">
+  <h1 class="text-4xl font-bold mb-4">Prakash Saud</h1>
+  <p class="text-xl text-gray-600">Physicist • Data Scientist • Builder</p>
+</section>
+
+<section class="py-10">
+  <h2 class="text-2xl font-semibold mb-6">Featured Projects</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    {% for project in featured_projects %}
+      <div class="border p-4 rounded-lg shadow">
+        <h3 class="font-bold">{{ project.title }}</h3>
+        <p class="text-sm text-gray-600">{{ project.description|truncatewords:20 }}</p>
+        <a href="{% url 'projects:project_detail' project.slug %}" class="text-blue-600">View</a>
+      </div>
+    {% empty %}
+      <p>No featured projects yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="py-10">
+  <h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
+  <div class="space-y-4">
+    {% for post in latest_posts %}
+      <article>
+        <h3 class="font-bold text-lg">
+          <a href="{% url 'blog:post_detail' post.slug %}">{{ post.title }}</a>
+        </h3>
+        <p class="text-gray-600">{{ post.excerpt|default:post.body|truncatewords:25 }}</p>
+      </article>
+    {% empty %}
+      <p>No blog posts yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

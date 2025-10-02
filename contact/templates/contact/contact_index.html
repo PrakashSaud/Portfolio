@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Contact Me</h1>
+
+<form method="post" hx-post="{% url 'contact:contact_index' %}" hx-target="#form-container" hx-swap="outerHTML" class="space-y-4">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div>
+    {{ form.name.label_tag }} {{ form.name }}
+  </div>
+  <div>
+    {{ form.email.label_tag }} {{ form.email }}
+  </div>
+  <div>
+    {{ form.message.label_tag }} {{ form.message }}
+  </div>
+  <div class="hidden">{{ form.honeypot }}</div>
+  <div>
+    <label>{{ form.consent }} I agree to be contacted.</label>
+  </div>
+  <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Send</button>
+</form>
+
+<div id="form-container"></div>
+{% endblock %}

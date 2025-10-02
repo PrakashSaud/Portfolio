@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Prakash Saud · Portfolio{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <!-- Tailwind CDN (dev only) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            typography: ({ theme }) => ({
+              DEFAULT: {
+                css: {
+                  color: theme('colors.gray.800'),
+                  a: { color: theme('colors.blue.600'), '&:hover': { color: theme('colors.blue.800') } },
+                },
+              },
+              dark: {
+                css: {
+                  color: theme('colors.gray.200'),
+                  a: { color: theme('colors.blue.400'), '&:hover': { color: theme('colors.blue.300') } },
+                },
+              },
+            }),
+          },
+        },
+      }
+    </script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+  </head>
+  <body class="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 antialiased transition-colors">
+    {% include "partials/_header.html" %}
+    <main class="max-w-5xl mx-auto px-4 py-10 prose dark:prose-invert">
+      {% block content %}{% endblock %}
+    </main>
+    {% include "partials/_footer.html" %}
+
+    <!-- Dark mode toggle script -->
+    <script>
+      const toggleBtn = document.getElementById("theme-toggle");
+      const root = document.documentElement;
+
+      if (localStorage.theme === "dark" || 
+          (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+
+      toggleBtn?.addEventListener("click", () => {
+        root.classList.toggle("dark");
+        if (root.classList.contains("dark")) {
+          localStorage.theme = "dark";
+        } else {
+          localStorage.theme = "light";
+        }
+      });
+    </script>
+  </body>
+</html>

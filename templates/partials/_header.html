@@ -1,0 +1,27 @@
+<header class="max-w-5xl mx-auto px-4 py-6">
+  <nav class="flex items-center justify-between">
+    <a href="{% url 'pages:home' %}" class="font-bold text-lg">PS</a>
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex gap-6 font-medium">
+      <li><a href="{% url 'projects:list' %}" class="hover:underline">Projects</a></li>
+      <li><a href="{% url 'blog:blog_index' %}" class="hover:underline">Blog</a></li>
+      <li><a href="{% url 'contact:contact_index' %}" class="hover:underline">Contact</a></li>
+    </ul>
+    <!-- Right side: Dark mode toggle -->
+    <button id="theme-toggle" class="ml-4 px-3 py-2 border rounded text-sm">
+      🌙
+    </button>
+    <!-- Mobile menu -->
+    <button id="menu-toggle" class="md:hidden ml-4 px-3 py-2 border rounded">☰</button>
+  </nav>
+  <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
+    <a href="{% url 'projects:list' %}" class="block">Projects</a>
+    <a href="{% url 'blog:blog_index' %}" class="block">Blog</a>
+    <a href="{% url 'contact:contact_index' %}" class="block">Contact</a>
+  </div>
+  <script>
+    document.getElementById("menu-toggle").addEventListener("click", () => {
+      document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
+  </script>
+</header>

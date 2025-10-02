@@ -1,0 +1,27 @@
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  {% for obj in page_obj.object_list %}
+    {% include "partials/_project_card.html" with obj=obj %}
+  {% empty %}
+    <p class="col-span-full">No projects found.</p>
+  {% endfor %}
+</div>
+
+{% if page_obj.paginator.num_pages > 1 %}
+  <nav class="mt-6 flex items-center justify-center gap-4">
+    {% if page_obj.has_previous %}
+      <a class="px-3 py-1 border rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+         href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-get="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-target="#projects-grid"
+         hx-push-url="true">Prev</a>
+    {% endif %}
+    <span class="px-3 py-1">Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a class="px-3 py-1 border rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+         href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-get="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if active_tag %}&tag={{ active_tag.slug }}{% endif %}"
+         hx-target="#projects-grid"
+         hx-push-url="true">Next</a>
+    {% endif %}
+  </nav>
+{% endif %}

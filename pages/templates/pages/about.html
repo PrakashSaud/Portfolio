@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="prose max-w-none">
+  <h1>About Me</h1>
+  <p>
+    I’m Prakash Saud, a physicist turned data scientist passionate about
+    computational methods, teaching, and building practical applications.
+  </p>
+
+  <h2>Skills</h2>
+  <ul>
+    <li>Python, Django, Pandas, Machine Learning</li>
+    <li>Data Visualization, SQL, Web Development</li>
+    <li>Physics, Computational Modeling, Teaching</li>
+  </ul>
+
+  <a href="{% static 'resume.pdf' %}" class="btn mt-4">Download Resume</a>
+</section>
+{% endblock %}

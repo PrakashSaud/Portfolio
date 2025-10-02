@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Projects · Prakash Saud{% endblock %}
+{% block meta_description %}Browse projects by Prakash Saud — filtered by tags, with search and pagination.{% endblock %}
+
+{% block content %}
+<div class="md:flex md:gap-8">
+  <!-- Sidebar -->
+  <aside class="md:w-1/4 mb-6 md:mb-0">
+    <!-- Search -->
+    <form method="get" action="{% url 'projects:list' %}" class="mb-6 flex gap-2">
+      <input type="text" name="q" placeholder="Search projects..."
+             value="{{ q }}"
+             class="flex-1 border rounded px-3 py-2 text-sm dark:bg-gray-900 dark:border-gray-700">
+      <button type="submit"
+              class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded hover:bg-blue-700">
+        Search
+      </button>
+    </form>
+
+    <!-- Tag filters -->
+    <div>
+      <h3 class="text-sm font-semibold mb-2">Filter by Tag</h3>
+      <ul class="space-y-1">
+        {% for t in all_tags %}
+          <li>
+            <a href="{% url 'projects:list' %}?tag={{ t.slug }}"
+               hx-get="{% url 'projects:list' %}?tag={{ t.slug }}"
+               hx-target="#projects-grid"
+               hx-push-url="true"
+               class="{% if active_tag and active_tag.slug == t.slug %}font-bold underline{% else %}hover:underline{% endif %}">
+              {{ t.name }}
+            </a>
+          </li>
+        {% empty %}
+          <li class="text-gray-500">No tags yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <section id="projects-grid" class="md:w-3/4">
+    {% include "projects/project_grid.html" %}
+  </section>
+</div>
+{% endblock %}
