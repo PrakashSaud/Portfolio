@@ -1,25 +1,78 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact · Prakash Saud{% endblock %}
+{% block meta_description %}Get in touch with Prakash Saud for data science, Django, or analytics projects.{% endblock %}
+
 {% block content %}
-<h1 class="text-2xl font-bold mb-6">Contact Me</h1>
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
 
-<form method="post" hx-post="{% url 'contact:contact_index' %}" hx-target="#form-container" hx-swap="outerHTML" class="space-y-4">
-  {% csrf_token %}
-  {{ form.non_field_errors }}
-  <div>
-    {{ form.name.label_tag }} {{ form.name }}
-  </div>
-  <div>
-    {{ form.email.label_tag }} {{ form.email }}
-  </div>
-  <div>
-    {{ form.message.label_tag }} {{ form.message }}
-  </div>
-  <div class="hidden">{{ form.honeypot }}</div>
-  <div>
-    <label>{{ form.consent }} I agree to be contacted.</label>
-  </div>
-  <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Send</button>
-</form>
+<!-- Hero -->
+<section class="contact-hero rounded-2xl p-8 md:p-10 border border-gray-200 dark:border-white/10 mb-8">
+  <h1 class="!mt-0 text-3xl font-bold">Contact Me</h1>
+  <p class="text-gray-700 dark:text-gray-300">Have a project or question? Send a message and I’ll get back to you.</p>
+</section>
 
-<div id="form-container"></div>
+<!-- Form Card -->
+<section class="not-prose">
+  <div class="contact-card border border-gray-200 dark:border-white/10 p-6 md:p-8">
+    <form
+      class="contact-form space-y-5"
+      method="post"
+      hx-post="{% url 'contact:contact_index' %}"
+      hx-target="#form-container"
+      hx-swap="outerHTML"
+      hx-indicator="#contact-spinner"
+    >
+      {% csrf_token %}
+
+      {{ form.non_field_errors }}
+
+      <div>
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {{ form.name.errors }}
+      </div>
+
+      <div>
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
+      </div>
+
+      <div>
+        {{ form.message.label_tag }}
+        {{ form.message }}
+        {{ form.message.errors }}
+        <div class="flex items-center justify-between mt-1">
+          <small id="message-counter" class="char-counter" data-max="1000">0/1000</small>
+          <div id="contact-spinner" aria-hidden="true"><span class="spinner"></span></div>
+        </div>
+      </div>
+
+      <div class="hidden">
+        {{ form.honeypot }}
+      </div>
+
+      <div class="flex items-center gap-2">
+        {{ form.consent }}
+        <label for="id_consent">I agree to be contacted.</label>
+        {{ form.consent.errors }}
+      </div>
+
+      <button
+        id="contact-submit"
+        type="submit"
+        class="contact-submit px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60"
+      >
+        Send
+      </button>
+    </form>
+
+    <!-- HTMX will replace this container on success/error partials -->
+    <div id="form-container" class="mt-6"></div>
+  </div>
+</section>
+
+<script defer src="{% static 'js/contact.js' %}"></script>
 {% endblock %}

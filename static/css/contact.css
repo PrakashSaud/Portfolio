@@ -1,0 +1,91 @@
+/* Hero */
+.contact-hero {
+  background:
+    radial-gradient(1200px 500px at 10% -20%, rgba(37,99,235,.12), transparent),
+    radial-gradient(1200px 500px at 100% 0%, rgba(14,165,233,.10), transparent);
+}
+
+/* Card */
+.contact-card {
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,.05);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.08);
+}
+
+/* Form base styles (without altering your form field names) */
+.contact-form label {
+  display: inline-block;
+  font-weight: 600;
+  margin-bottom: .35rem;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid rgba(0,0,0,.12);
+  background: white;
+  padding: .65rem .8rem;
+  border-radius: .75rem;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.dark .contact-form input[type="text"],
+.dark .contact-form input[type="email"],
+.dark .contact-form textarea {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.2);
+  color: #e5e7eb;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* Errors from Django (ul.errorlist) */
+.contact-form .errorlist {
+  margin: .35rem 0 0 0;
+  padding: .5rem .75rem;
+  border: 1px solid #ef4444;
+  background: rgba(239,68,68,.08);
+  color: #b91c1c;
+  border-radius: .5rem;
+  list-style: none;
+}
+.dark .contact-form .errorlist {
+  border-color: #f87171;
+  background: rgba(248,113,113,.1);
+  color: #fecaca;
+}
+
+/* Honeypot stays hidden */
+.contact-form .hidden { display: none; }
+
+/* Submit button */
+.contact-submit {
+  border-radius: .9rem;
+  transition: transform .08s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.contact-submit:active { transform: translateY(1px); }
+
+/* Indicator spinner (for HTMX) */
+#contact-spinner { display: none; }
+#contact-spinner.htmx-request { display: inline-block; }
+.spinner {
+  width: 18px; height: 18px; border-radius: 9999px;
+  border: 2px solid rgba(0,0,0,.2); border-top-color: #2563eb;
+  animation: spin 0.8s linear infinite;
+}
+.dark .spinner { border-color: rgba(255,255,255,.25); border-top-color: #60a5fa; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Character counter */
+.char-counter {
+  font-size: .825rem;
+  color: #6b7280;
+}
+.dark .char-counter { color: #9ca3af; }
