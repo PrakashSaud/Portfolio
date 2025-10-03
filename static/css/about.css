@@ -1,0 +1,29 @@
+:root {
+  --brand: #2563eb;   /* blue-600 */
+  --brand2: #0ea5e9;  /* sky-500 */
+}
+
+/* Subtle background glow for hero */
+.about-hero {
+  background:
+    radial-gradient(1200px 500px at 10% -20%, rgba(37,99,235,.12), transparent),
+    radial-gradient(1200px 500px at 100% 0%, rgba(14,165,233,.10), transparent);
+}
+
+/* Cards & badges */
+.card { border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,.05); transition: transform .2s ease, box-shadow .2s ease; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,.08); }
+.badge { display:inline-flex; align-items:center; gap:.4rem; padding:.25rem .6rem; border:1px solid rgba(0,0,0,.08); border-radius:9999px; font-size:.8rem; }
+.dark .badge { border-color: rgba(255,255,255,.18); }
+
+/* Skill bars */
+.skill { height:10px; border-radius:9999px; background:rgba(0,0,0,.06); overflow:hidden; }
+.dark .skill { background:rgba(255,255,255,.15); }
+.skill-fill { height:100%; width:0; border-radius:9999px; background:linear-gradient(90deg, var(--brand), var(--brand2)); transition:width 900ms ease; }
+
+/* Timeline */
+.timeline { position:relative; }
+.timeline:before { content:""; position:absolute; left:1.125rem; top:0; bottom:0; width:2px; background:rgba(0,0,0,.08); }
+.dark .timeline:before { background:rgba(255,255,255,.2); }
+.timeline-item { position:relative; padding-left:2.5rem; }
+.timeline-dot { position:absolute; left:.75rem; top:.35rem; width:.75rem; height:.75rem; border-radius:9999px; background:var(--brand); box-shadow:0 0 0 4px rgba(37,99,235,.15); }
