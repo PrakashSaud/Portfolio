@@ -1,0 +1,26 @@
+/* Hero */
+.home-hero {
+  background:
+    radial-gradient(1200px 500px at 10% -20%, rgba(37,99,235,.12), transparent),
+    radial-gradient(1200px 500px at 100% 0%, rgba(14,165,233,.10), transparent);
+}
+
+/* Project cards */
+.project-card {
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,.05);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.08);
+}
+
+/* Blog posts */
+.post-preview {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  padding-bottom: 1rem;
+}
+.dark .post-preview {
+  border-color: rgba(255,255,255,.15);
+}

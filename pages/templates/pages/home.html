@@ -1,18 +1,27 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home · Prakash Saud{% endblock %}
+{% block meta_description %}Welcome to the portfolio of Prakash Saud — physicist turned data scientist, passionate about building practical applications and computational methods.{% endblock %}
+
 {% block content %}
-<section class="text-center py-20">
-  <h1 class="text-4xl font-bold mb-4">Prakash Saud</h1>
-  <p class="text-xl text-gray-600">Physicist • Data Scientist • Builder</p>
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<!-- Hero -->
+<section class="home-hero text-center py-20 rounded-2xl border border-gray-200 dark:border-white/10 opacity-0 translate-y-3 transition duration-700">
+  <h1 class="text-5xl font-bold mb-4">Prakash Saud</h1>
+  <p class="text-xl text-gray-700 dark:text-gray-300">Physicist • Data Scientist • Builder</p>
 </section>
 
-<section class="py-10">
-  <h2 class="text-2xl font-semibold mb-6">Featured Projects</h2>
+<!-- Featured Projects -->
+<section class="py-14">
+  <h2 class="text-2xl font-semibold mb-8">Featured Projects</h2>
   <div class="grid md:grid-cols-3 gap-6">
     {% for project in featured_projects %}
-      <div class="border p-4 rounded-lg shadow">
-        <h3 class="font-bold">{{ project.title }}</h3>
-        <p class="text-sm text-gray-600">{{ project.description|truncatewords:20 }}</p>
-        <a href="{% url 'projects:project_detail' project.slug %}" class="text-blue-600">View</a>
+      <div class="project-card border border-gray-200 dark:border-white/10 p-6 opacity-0 translate-y-3 transition duration-700" data-animate>
+        <h3 class="font-bold text-lg mb-2">{{ project.title }}</h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">{{ project.description|truncatewords:20 }}</p>
+        <a href="{% url 'projects:project_detail' project.slug %}" class="text-blue-600 hover:text-blue-800">View →</a>
       </div>
     {% empty %}
       <p>No featured projects yet.</p>
@@ -20,19 +29,22 @@
   </div>
 </section>
 
-<section class="py-10">
-  <h2 class="text-2xl font-semibold mb-6">Latest Posts</h2>
-  <div class="space-y-4">
+<!-- Latest Posts -->
+<section class="py-14">
+  <h2 class="text-2xl font-semibold mb-8">Latest Posts</h2>
+  <div class="space-y-6">
     {% for post in latest_posts %}
-      <article>
+      <article class="post-preview opacity-0 translate-y-3 transition duration-700" data-animate>
         <h3 class="font-bold text-lg">
-          <a href="{% url 'blog:post_detail' post.slug %}">{{ post.title }}</a>
+          <a href="{% url 'blog:post_detail' post.slug %}" class="hover:text-blue-600">{{ post.title }}</a>
         </h3>
-        <p class="text-gray-600">{{ post.excerpt|default:post.body|truncatewords:25 }}</p>
+        <p class="text-gray-700 dark:text-gray-300">{{ post.excerpt|default:post.body|truncatewords:25 }}</p>
       </article>
     {% empty %}
       <p>No blog posts yet.</p>
     {% endfor %}
   </div>
 </section>
+
+<script defer src="{% static 'js/home.js' %}"></script>
 {% endblock %}
