@@ -1,0 +1,63 @@
+/* --- FocusFlow minimal design tokens (inherits Tailwind base) --- */
+:root {
+  --ff-card-bg: #ffffff;
+  --ff-border: 1px solid rgba(0,0,0,0.08);
+  --ff-muted: rgba(0,0,0,0.6);
+  --ff-shadow: 0 6px 24px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+  --ff-radius: 1rem;
+}
+
+/* Utilities */
+.card {
+  background: var(--ff-card-bg);
+  border: var(--ff-border);
+  box-shadow: var(--ff-shadow);
+  border-radius: var(--ff-radius);
+  padding: 1.5rem;
+}
+.h1 { font-size: 1.875rem; line-height: 2.25rem; font-weight: 800; }
+.h2 { font-size: 1.5rem; line-height: 2rem; font-weight: 700; }
+.muted { color: var(--ff-muted); }
+
+/* Buttons */
+.btn-primary, .btn-secondary, .btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: .6rem 1rem; border-radius: .75rem; font-weight: 600;
+  transition: transform .06s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+}
+.btn-primary { background: #2563eb; color: #fff; }
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-secondary { background: #eef2ff; color: #1e40af; }
+.btn-ghost { background: transparent; border: 1px solid rgba(0,0,0,0.08); color: #374151; }
+.btn-ghost:hover { background: rgba(0,0,0,0.03); }
+
+/* Message card */
+.message-card {
+  background: #fff; border: var(--ff-border); border-radius: .9rem; padding: 1rem;
+  box-shadow: var(--ff-shadow);
+}
+.message-card .meta {
+  display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--ff-muted);
+}
+.message-card .subject { font-weight: 700; margin: .35rem 0 .25rem; }
+.message-card .summary { color: #374151; }
+.actions-list { margin-top: .5rem; color: #374151; }
+
+/* Badges */
+.badge {
+  padding: .2rem .5rem; border-radius: .5rem; font-weight: 600; font-size: .75rem;
+  border: 1px solid rgba(0,0,0,0.08); background: #f9fafb; color: #111827;
+}
+.badge.email { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.badge.slack { background: #ecfeff; color: #0e7490; border-color: #a5f3fc; }
+.badge.whatsapp { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+
+/* Empty state */
+.empty-state {
+  text-align: center; padding: 4rem 1rem; background: #fff; border: var(--ff-border);
+  border-radius: var(--ff-radius); box-shadow: var(--ff-shadow);
+}
+.empty-state .icon { font-size: 2.5rem; margin-bottom: .5rem; }
+.empty-state .title { font-weight: 800; font-size: 1.25rem; }
+.empty-state .subtitle { color: var(--ff-muted); margin: .25rem 0 1rem; }
+.empty-state .actions { display: inline-flex; gap: .5rem; }

@@ -1,0 +1,31 @@
+{% extends "focusflow/_layout.html" %}
+{% load static %}
+
+{% block focusflow_title %}FocusFlow — Home{% endblock %}
+
+{% block focusflow_body %}
+<section class="grid gap-6 md:grid-cols-2">
+  <div class="card">
+    <h1 class="h1">Tame the flood of messages</h1>
+    <p class="muted">
+      FocusFlow unifies email, Slack/Teams, WhatsApp, and more — then uses AI to
+      prioritize, summarize, and extract your action items.
+    </p>
+    <div class="mt-6 flex gap-3">
+      <a href="{% url 'focusflow:dashboard' %}" class="btn-primary">Try the Dashboard</a>
+      <a href="{% url 'focusflow:gmail_auth' %}" class="btn-ghost">Connect Gmail</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="h2">What you’ll get</h2>
+    <ul class="list">
+      <li>✔ Unified inbox with source tags</li>
+      <li>✔ AI prioritization (Urgent / Action / FYI / Spam)</li>
+      <li>✔ Thread summaries & action extraction</li>
+      <li>✔ Focus mode for deep work</li>
+      <li>✔ Analytics & time insights</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

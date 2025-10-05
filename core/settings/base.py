@@ -32,6 +32,9 @@ INSTALLED_APPS = [
     "contact",
     # 3rd-party
     "taggit",
+
+    # apps
+    "apps.focusflow"
 ]
 DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = [
@@ -52,6 +55,10 @@ INSTALLED_APPS = [
     "projects",
     "blog",
     "contact",
+
+    # apps
+    "apps.focusflow",
+    
     # 3rd-party
     "taggit",
 ]

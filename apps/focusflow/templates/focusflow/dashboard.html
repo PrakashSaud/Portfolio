@@ -1,0 +1,38 @@
+{% extends "focusflow/_layout.html" %}
+{% load static %}
+
+{% block focusflow_title %}FocusFlow — Dashboard{% endblock %}
+
+{% block focusflow_body %}
+<section class="flex flex-col gap-6">
+  <div class="card flex items-center justify-between">
+    <div>
+      <h2 class="h2">Email Summary Dashboard</h2>
+      <p class="muted">AI-generated summaries and action items from your inbox.</p>
+    </div>
+    <div class="flex gap-3">
+      <a href="{% url 'focusflow:gmail_auth' %}" class="btn-secondary">Connect Gmail</a>
+      <button id="refresh-btn" class="btn-primary">Refresh</button>
+    </div>
+  </div>
+
+  {% if summaries and summaries|length > 0 %}
+    <div id="feed" class="grid md:grid-cols-2 gap-5">
+      {% for s in summaries %}
+        {% include "focusflow/_message_item.html" with
+           source=s.source sender=s.sender subject=s.subject time=s.time
+           summary=s.summary actions=s.actions %}
+      {% endfor %}
+    </div>
+  {% else %}
+    {% include "focusflow/_empty_state.html" %}
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block focusflow_scripts %}
+<script src="{% static 'focusflow/js/dashboard.js' %}"></script>
+<script>
+  window.FOCUSFLOW_FEED_ENDPOINT = "{% url 'focusflow:dashboard' %}";
+</script>
+{% endblock %}

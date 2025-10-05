@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% block focusflow_title %}FocusFlow{% endblock %}{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'focusflow/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% include "focusflow/_navbar.html" %}
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    {% block focusflow_body %}{% endblock %}
+  </main>
+  <script src="{% static 'focusflow/js/main.js' %}"></script>
+  {% block focusflow_scripts %}{% endblock %}
+{% endblock %}

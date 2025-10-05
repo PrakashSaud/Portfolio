@@ -1,0 +1,18 @@
+<article class="message-card">
+  <div class="meta">
+    <span class="badge {{ source|default:'email' }}">{{ source|default:"Email" }}</span>
+    <span class="from">{{ sender }}</span>
+    <span class="time">{{ time }}</span>
+  </div>
+  <h3 class="subject">{{ subject }}</h3>
+  {% if summary %}
+    <p class="summary">{{ summary }}</p>
+  {% endif %}
+  {% if actions %}
+    <ul class="actions-list">
+      {% for a in actions %}
+        <li>• {{ a }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</article>

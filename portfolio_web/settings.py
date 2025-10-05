@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "projects",
     "blog",
     "contact",
+    "apps/focusflow",
 ]
 
 # Whitenoise allows Django to serve static files in production simply.

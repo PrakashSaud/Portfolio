@@ -1,0 +1,14 @@
+{% extends "focusflow/_layout.html" %}
+
+{% block focusflow_title %}Connect Gmail — FocusFlow{% endblock %}
+
+{% block focusflow_body %}
+<section class="max-w-xl mx-auto card">
+  <h2 class="h2 mb-2">Connect Gmail</h2>
+  <p class="muted mb-6">
+    We’ll ask Google for permission to read your recent emails to generate summaries and action items.
+    You can revoke access anytime in your Google Account.
+  </p>
+  <a href="{% url 'focusflow:gmail_auth' %}" class="btn-primary w-full text-center">Continue with Google</a>
+</section>
+{% endblock %}

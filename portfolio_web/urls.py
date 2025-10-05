@@ -27,6 +27,7 @@ urlpatterns = [
     path("projects/", include(("projects.urls", "projects"), namespace="projects")),
     path("blog/", include(("blog.urls", "blog"), namespace="blog")),
     path("contact/", include(("contact.urls", "contact"), namespace="contact")),
+    path("focusflow/", include(("apps.focusflow.urls", "focusflow"), namespace="focusflow")),
 ]
 
 if settings.DEBUG:

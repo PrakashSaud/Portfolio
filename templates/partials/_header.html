@@ -1,26 +1,52 @@
 <header class="max-w-5xl mx-auto px-4 py-6">
   <nav class="flex items-center justify-between">
     <a href="{% url 'pages:home' %}" class="font-bold text-lg">PS</a>
+
     <!-- Desktop nav -->
-    <ul class="hidden md:flex gap-6 font-medium">
+    <ul class="hidden md:flex gap-6 font-medium items-center">
       <li><a href="{% url 'pages:about' %}" class="hover:underline">About</a></li>
       <li><a href="{% url 'projects:list' %}" class="hover:underline">Projects</a></li>
       <li><a href="{% url 'blog:blog_index' %}" class="hover:underline">Blog</a></li>
       <li><a href="{% url 'contact:contact_index' %}" class="hover:underline">Contact</a></li>
+
+      <!-- Apps dropdown -->
+      <li class="relative group">
+        <button class="hover:underline flex items-center gap-1">
+          Apps ▾
+        </button>
+        <ul
+          class="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg opacity-0 group-hover:opacity-100 group-hover:visible invisible transition duration-200"
+        >
+          <li>
+            <a href="{% url 'focusflow:index' %}" class="block px-4 py-2 hover:bg-gray-100">FocusFlow</a>
+          </li>
+          <!-- You can add more apps below -->
+          <!-- <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Another App</a></li> -->
+        </ul>
+      </li>
     </ul>
+
     <!-- Right side: Dark mode toggle -->
-    <button id="theme-toggle" class="ml-4 px-3 py-2 border rounded text-sm">
-      🌙
-    </button>
+    <button id="theme-toggle" class="ml-4 px-3 py-2 border rounded text-sm">🌙</button>
+
     <!-- Mobile menu -->
     <button id="menu-toggle" class="md:hidden ml-4 px-3 py-2 border rounded">☰</button>
   </nav>
+
+  <!-- Mobile dropdown -->
   <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
     <a href="{% url 'pages:about' %}" class="block">About</a>
     <a href="{% url 'projects:list' %}" class="block">Projects</a>
     <a href="{% url 'blog:blog_index' %}" class="block">Blog</a>
     <a href="{% url 'contact:contact_index' %}" class="block">Contact</a>
+
+    <!-- Apps section on mobile -->
+    <div class="border-t pt-2 mt-2">
+      <p class="font-medium text-gray-700 mb-1">Apps</p>
+      <a href="{% url 'focusflow:index' %}" class="block text-sm text-gray-600 hover:underline">FocusFlow</a>
+    </div>
   </div>
+
   <script>
     document.getElementById("menu-toggle").addEventListener("click", () => {
       document.getElementById("mobile-menu").classList.toggle("hidden");
