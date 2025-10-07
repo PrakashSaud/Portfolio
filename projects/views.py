@@ -8,8 +8,40 @@ from .models import Project
 
 
 def project_index(request):
-    # projects = Project.objects.all().order_by("-created_at")
-    return render(request, "projects/project_index.html")
+    """
+    Renders the main static Projects landing page.
+    Currently uses sample data aligned with the new frontend layout.
+    Later, this can be connected to the Project model dynamically.
+    """
+    projects = [
+        {
+            "title": "Hotel Staff Scheduling Optimization",
+            "description": "Machine learning project using optimization models to minimize operational costs and align with employee preferences.",
+            "image": "img/project1.jpg",
+            "category": "Data Science",
+            "category_color": "blue",
+            "link": "#",
+        },
+        {
+            "title": "Stock Prediction & Sentiment Analysis",
+            "description": "Python and NLP project analyzing financial news to predict demand, supply, and price movement.",
+            "image": "img/project2.jpg",
+            "category": "AI / NLP",
+            "category_color": "green",
+            "link": "#",
+        },
+        {
+            "title": "FocusFlow — Unified Smart Inbox",
+            "description": "SaaS productivity tool integrating multiple communication channels with AI summarization and prioritization.",
+            "image": "img/project3.jpg",
+            "category": "Web App",
+            "category_color": "purple",
+            "link": "focusflow:index",
+        },
+    ]
+
+    context = {"projects": projects}
+    return render(request, "projects/project_index.html", context)
 
 
 def projects_list(request):

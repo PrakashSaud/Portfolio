@@ -1,0 +1,163 @@
+{% extends "focusflow/_layout.html" %}
+{% load static %}
+
+{% block focusflow_title %}FocusFlow — Integrations{% endblock %}
+
+{% block focusflow_body %}
+<section class="flex flex-col gap-8">
+
+  <!-- Header -->
+  <div class="card flex items-center justify-between">
+    <div>
+      <h2 class="h2 font-semibold text-blue-700 dark:text-blue-400">Integrations</h2>
+      <p class="muted text-gray-600 dark:text-gray-400">
+        Manage your connected communication channels such as Gmail, Slack, and more.
+      </p>
+    </div>
+    <a href="{% url 'focusflow:dashboard' %}" class="btn-secondary">← Back to Dashboard</a>
+  </div>
+
+  <!-- Dynamic Integrations List -->
+  {% if integrations and integrations|length > 0 %}
+    {% for integ in integrations %}
+      <div class="bg-white dark:bg-gray-800 shadow rounded-xl border border-gray-200 dark:border-gray-700 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          {% if integ.icon %}
+            <img src="{% static integ.icon %}" alt="{{ integ.provider_label }}" class="w-10 h-10">
+          {% endif %}
+          <div>
+            <h3 class="font-semibold text-lg">{{ integ.provider_label }}</h3>
+
+            {% if integ.status == "active" %}
+              <p class="text-sm text-green-600 dark:text-green-400">
+                ✅ Connected as {{ integ.account_label }}
+              </p>
+            {% elif integ.status == "paused" %}
+              <p class="text-sm text-yellow-600 dark:text-yellow-400">
+                ⏸️ Paused — {{ integ.account_label }}
+              </p>
+            {% elif integ.status == "error" %}
+              <p class="text-sm text-red-600 dark:text-red-400">
+                ⚠️ Error — {{ integ.account_label }}
+              </p>
+            {% elif integ.status == "disconnected" %}
+              <p class="text-sm text-gray-500 dark:text-gray-400">
+                ❌ Disconnected — {{ integ.account_label }}
+              </p>
+            {% else %}
+              <p class="text-sm text-gray-500 dark:text-gray-400">Not connected yet</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          {% if integ.coming_soon %}
+            <button disabled class="btn-secondary opacity-60 cursor-not-allowed">
+              Coming Soon
+            </button>
+          {% elif integ.status == "active" and integ.disconnect_url %}
+            <a href="{{ integ.disconnect_url }}"
+               class="btn-secondary border-red-500 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">
+              Disconnect
+            </a>
+          {% elif integ.connect_url %}
+            <a href="{{ integ.connect_url }}"
+               class="btn-primary bg-blue-600 hover:bg-blue-700 text-white">
+              Connect
+            </a>
+          {% else %}
+            <button disabled class="btn-secondary opacity-60 cursor-not-allowed">
+              Not Available
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <!-- Fallback for Session-Based Gmail (no DB rows yet) -->
+    <div class="bg-white dark:bg-gray-800 shadow rounded-xl border border-gray-200 dark:border-gray-700 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <img src="{% static 'focusflow/img/gmail-icon.svg' %}" alt="Gmail" class="w-10 h-10">
+        <div>
+          <h3 class="font-semibold text-lg">Gmail</h3>
+          {% if session_connected %}
+            <p class="text-sm text-green-600 dark:text-green-400">
+              ✅ Connected as {{ account_label }}
+            </p>
+          {% elif db_integration %}
+            <p class="text-sm text-yellow-600 dark:text-yellow-400">
+              ⚠️ Status: {{ db_integration.get_status_display }}
+            </p>
+          {% else %}
+            <p class="text-sm text-gray-500 dark:text-gray-400">Not connected yet</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        {% if session_connected %}
+          <a href="{% url 'focusflow:gmail_disconnect' %}"
+             class="btn-secondary border-red-500 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">
+             Disconnect
+          </a>
+        {% else %}
+          <a href="{% url 'focusflow:gmail_auth' %}"
+             class="btn-primary bg-blue-600 hover:bg-blue-700 text-white">
+             Connect Gmail
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Default Slack Card -->
+    <div class="bg-white dark:bg-gray-800 shadow rounded-xl border border-gray-200 dark:border-gray-700 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <img src="{% static 'focusflow/img/slack-icon.svg' %}" alt="Slack" class="w-10 h-10">
+        <div>
+          <h3 class="font-semibold text-lg">Slack</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Integration coming soon</p>
+        </div>
+      </div>
+      <div>
+        <button disabled class="btn-secondary opacity-60 cursor-not-allowed">Coming Soon</button>
+      </div>
+    </div>
+  {% endif %}
+
+  <!--Whatspp Integration card-->
+   
+      <!-- WhatsApp Integration Card -->
+  <div class="bg-white dark:bg-gray-800 shadow rounded-xl border border-gray-200 dark:border-gray-700 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div class="flex items-center gap-4">
+      <img src="{% static 'focusflow/img/whatsapp-icon.svg' %}" alt="WhatsApp" class="w-10 h-10">
+      <div>
+        <h3 class="font-semibold text-lg">WhatsApp</h3>
+        {% if request.session.whatsapp_connected %}
+          <p class="text-sm text-green-600 dark:text-green-400">
+            ✅ Connected as {{ request.session.whatsapp_account_label }}
+          </p>
+        {% else %}
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Not connected yet
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      {% if request.session.whatsapp_connected %}
+        <a href="{% url 'focusflow:whatsapp_disconnect' %}"
+           class="btn-secondary border-red-500 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">
+           Disconnect
+        </a>
+      {% else %}
+        <a href="{% url 'focusflow:whatsapp_connect' %}"
+           class="btn-primary bg-green-600 hover:bg-green-700 text-white">
+           Connect WhatsApp
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+</section>
+{% endblock %}

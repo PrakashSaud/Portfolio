@@ -1,0 +1,63 @@
+/* ============================================
+   Prakash Saud — Portfolio Projects Styling
+   --------------------------------------------
+   Theme-aligned, minimal custom CSS enhancements
+   ============================================ */
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
+}
+
+.project-card img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Subtle accent glow for tags */
+.project-card span {
+  box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+  transition: box-shadow 0.25s ease;
+}
+
+.project-card:hover span {
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* Search field glow */
+#project-search:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Empty state styling */
+#no-results {
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+}
+
+/* Light animation for appearance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card {
+  animation: fadeInUp 0.5s ease forwards;
+}

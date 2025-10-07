@@ -1,5 +1,120 @@
 {% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'projects/css/projects.css' %}">
+
 {% block title %}Projects · Prakash Saud{% endblock %}
+
 {% block content %}
-<h1 class="text-2xl font-semibold">Projects</h1>
-{% endblock %}  
+<section class="space-y-8">
+  <!-- Page Header -->
+  <div class="text-center">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Projects</h1>
+    <p class="mt-2 text-gray-600 dark:text-gray-400">Explore my data science, web development, and AI projects.</p>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="max-w-md mx-auto relative">
+    <input
+      id="project-search"
+      type="text"
+      placeholder="Search projects..."
+      class="w-full border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-200"
+    />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5 absolute right-3 top-3 text-gray-400"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2M10 18a8 8 0 100-16 8 8 0 000 16z" />
+    </svg>
+  </div>
+
+  <!-- Projects Grid -->
+  <div
+    id="projects-grid"
+    class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
+  >
+    <!-- Project Card -->
+    <article class="project-card border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition duration-200 bg-white dark:bg-gray-800">
+      <img
+        src="{% static 'img/project1.jpg' %}"
+        alt="Hotel Staff Scheduling"
+        class="rounded-lg mb-4 object-cover w-full h-40"
+      />
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Hotel Staff Scheduling Optimization</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+        Machine learning project using optimization models to minimize operational costs and align with employee preferences.
+      </p>
+      <div class="mt-3 flex justify-between items-center">
+        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">View Details →</a>
+        <span class="text-xs px-2 py-1 rounded bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">Data Science</span>
+      </div>
+    </article>
+
+    <!-- Project Card -->
+    <article class="project-card border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition duration-200 bg-white dark:bg-gray-800">
+      <img
+        src="{% static 'img/project2.jpg' %}"
+        alt="Stock Prediction"
+        class="rounded-lg mb-4 object-cover w-full h-40"
+      />
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Stock Prediction & Sentiment Analysis</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+        Python and NLP project analyzing financial news to predict demand, supply, and price movement.
+      </p>
+      <div class="mt-3 flex justify-between items-center">
+        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">View Details →</a>
+        <span class="text-xs px-2 py-1 rounded bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300">AI / NLP</span>
+      </div>
+    </article>
+
+    <!-- Project Card -->
+    <article class="project-card border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition duration-200 bg-white dark:bg-gray-800">
+      <img
+        src="{% static 'img/project3.jpg' %}"
+        alt="FocusFlow"
+        class="rounded-lg mb-4 object-cover w-full h-40"
+      />
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">FocusFlow — Unified Smart Inbox</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
+        SaaS productivity tool integrating multiple communication channels with AI summarization and prioritization.
+      </p>
+      <div class="mt-3 flex justify-between items-center">
+        <a href="{% url 'focusflow:index' %}" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">Try App →</a>
+        <span class="text-xs px-2 py-1 rounded bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300">Web App</span>
+      </div>
+    </article>
+  </div>
+
+  <!-- Empty State -->
+  <div id="no-results" class="hidden text-center mt-10 text-gray-500 dark:text-gray-400">
+    <p>No matching projects found.</p>
+  </div>
+</section>
+
+<!-- JS: Filter projects -->
+<script>
+  const searchInput = document.getElementById("project-search");
+  const projectsGrid = document.getElementById("projects-grid");
+  const noResults = document.getElementById("no-results");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+    let matches = 0;
+
+    projectsGrid.querySelectorAll(".project-card").forEach((card) => {
+      const text = card.innerText.toLowerCase();
+      if (text.includes(query)) {
+        card.classList.remove("hidden");
+        matches++;
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+
+    noResults.classList.toggle("hidden", matches !== 0);
+  });
+</script>
+{% endblock %}
